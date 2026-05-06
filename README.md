@@ -57,3 +57,5 @@
 | `make seed`    | Выполнение сидеров для наполнения БД |
 | `make down`    | Остановка и удаление контейнеров     |
 | `make php`     | Консоль bash php контейнера          |
+| `make analyse` | PHPStan analyse                      |
+| `make pint`    | CodeStyle Pint                       |

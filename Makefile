@@ -1,5 +1,5 @@
 # Объявляем все цели как фальшивые (не имена файлов)
-.PHONY: create up install migrate seed down php
+.PHONY: create up install migrate seed down php analyse pint
 
 # 🔥 Полная установка проекта одной командой
 create:
@@ -39,3 +39,11 @@ down:
 # Вход в контейнер
 php:
 	docker compose exec php /bin/bash
+
+# PHPStan analyse
+analyse:
+	docker compose exec php ./vendor/bin/phpstan analyse --memory-limit=512M
+
+# Pint
+pint:
+	docker compose exec php ./vendor/bin/pint
