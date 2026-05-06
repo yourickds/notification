@@ -1,0 +1,76 @@
+services:
+  mysql:
+    image: docker.io/mysql:8.4
+    restart: no
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - app-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-p${DB_ROOT_PASSWORD}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  phpmyadmin:
+    image: docker.io/phpmyadmin:5.2.3
+    restart: no
+    ports:
+      - "8080:80"
+    environment:
+      UPLOAD_LIMIT: 2G
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+      PMA_USER: ${DB_USERNAME}
+      PMA_PASSWORD: ${DB_PASSWORD}
+    networks:
+      - app-network
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+  php:
+    build:
+      context: ./docker/php
+    restart: no
+    environment:
+      DB_CONNECTION: mysql
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_DATABASE: ${DB_DATABASE}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - ./html:/var/www/html
+    networks:
+      - app-network
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+  nginx:
+    image: docker.io/nginx:1.30
+    restart: no
+    ports:
+      - "8000:80"
+    volumes:
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - ./html:/var/www/html
+    networks:
+      - app-network
+    depends_on:
+      - php
+
+volumes:
+  mysql_data:
+    driver: local
+
+networks:
+  app-network:
+    driver: bridge
