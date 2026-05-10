@@ -9,6 +9,8 @@ create:
 	docker compose up -d
 	@echo "Установка зависимостей..."
 	docker compose exec -T php composer install --no-interaction
+	@echo "Установка ключа приложения"
+	docker compose exec -T php php artisan key:generate
 	@echo "Применение миграций..."
 	docker compose exec -T php php artisan migrate --force
 	@echo "Заполнение базы данными..."
