@@ -1,5 +1,5 @@
 # Объявляем все цели как фальшивые (не имена файлов)
-.PHONY: create up install migrate seed down php analyse pint
+.PHONY: create up install migrate seed down php analyse pint test queue
 
 # 🔥 Полная установка проекта одной командой
 create:
@@ -47,3 +47,11 @@ analyse:
 # Pint
 pint:
 	docker compose exec php ./vendor/bin/pint
+
+# Tests
+test:
+	docker compose exec php php artisan test
+
+# Queues
+queue:
+	docker compose exec php php artisan queue:work

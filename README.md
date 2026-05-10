@@ -40,22 +40,24 @@
 
 ## Адреса доступа
 
-| Сервис | URL |
-|--------|-----|
-| **Приложение** | [http://localhost:8000](http://localhost:8000) |
-| **phpMyAdmin** | [http://localhost:8080](http://localhost:8080) |
+| Сервис          | URL                                            |
+|-----------------|------------------------------------------------|
+| **Приложение**  | [http://localhost:8000](http://localhost:8000) |
+| **phpMyAdmin**  | [http://localhost:8080](http://localhost:8080) |
 
 ---
 
 ## Доступные команды Makefile
 
-| Команда        | Описание                             |
-|----------------|--------------------------------------|
-| `make up`      | Запуск контейнеров в фоновом режиме  |
-| `make install` | Установка зависимостей Composer      |
-| `make migrate` | Запуск миграций базы данных          |
-| `make seed`    | Выполнение сидеров для наполнения БД |
-| `make down`    | Остановка и удаление контейнеров     |
-| `make php`     | Консоль bash php контейнера          |
-| `make analyse` | PHPStan analyse                      |
-| `make pint`    | CodeStyle Pint                       |
+| Команда         | Описание                                 |
+|-----------------|------------------------------------------|
+| `make up`       | Запуск контейнеров в фоновом режиме      |
+| `make install`  | Установка зависимостей Composer          |
+| `make migrate`  | Запуск миграций базы данных              |
+| `make seed`     | Выполнение сидеров для наполнения БД     |
+| `make down`     | Остановка и удаление контейнеров         |
+| `make php`      | Консоль bash php контейнера              |
+| `make analyse`  | PHPStan analyse                          |
+| `make pint`     | CodeStyle Pint                           |
+| `make test`     | Tests Unit and Feature                   |
+| `make queue`    | Queue work (jobs)                        |
